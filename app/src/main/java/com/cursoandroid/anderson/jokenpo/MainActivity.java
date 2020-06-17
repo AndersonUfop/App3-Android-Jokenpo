@@ -2,9 +2,11 @@ package com.cursoandroid.anderson.jokenpo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -31,16 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void opcaoSelecionada(String opcaoSelecionada) {
+    public void opcaoSelecionada(String escolhaUsuario) {
 
         ImageView imagemResultado = findViewById(R.id.imageResultado);
+        TextView textoResultado = findViewById(R.id.textResultado);
+
+
 
 
         int numero = new Random().nextInt(3); // 0 1 2
         String[] opcoes = {"pedra", "papel", "tesoura"};
-        String opcaoApp = opcoes[numero];
+        String escolhaApp = opcoes[numero];
 
-        switch ( opcaoApp ) {
+        switch ( escolhaApp ) {
             case "pedra":
                 imagemResultado.setImageResource(R.drawable.pedra);
                 break;
@@ -50,11 +55,28 @@ public class MainActivity extends AppCompatActivity {
             case "tesoura":
                 imagemResultado.setImageResource(R.drawable.tesoura);
                 break;
-
-
         }
 
-        System.out.println("item clicado: " + opcaoApp);
+        if (
+                (escolhaApp == "tesoura" && escolhaUsuario == "papel")||
+                (escolhaApp == "papel" && escolhaUsuario == "pedra") ||
+                (escolhaApp == "pedra" && escolhaUsuario == "tesoura"))
+        { // app ganhador
+            textoResultado.setText("Você perdeu \uD83D\uDE2D");
+
+        } else if (
+                (escolhaUsuario == "tesoura" && escolhaApp == "papel")||
+                (escolhaUsuario == "papel" && escolhaApp == "pedra")||
+                (escolhaUsuario == "pedra" && escolhaApp == "tesoura"))
+
+         { // usuário ganhador
+             textoResultado.setText("Você ganhou \uD83D\uDE01");
+
+        } else { // empate
+            textoResultado.setText("Empatamos \uD83D\uDE42");
+        }
+
+        System.out.println("item clicado: " + escolhaApp);
 
     }
 }
